@@ -4,7 +4,7 @@
   "description": "a front-end build system that use localstorage to cache files",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,10 @@
     "rev-hash": "^1.0.0",
     "through2": "^2.0.1",
     "vinyl-fs": "^2.4.3"
+  },
+  "devDependencies": {
+    "gulp-cssmin": "^0.1.7",
+    "gulp-if": "^2.0.0",
+    "gulp-uglify": "^1.5.3"
   }
 }

@@ -1,0 +1,16 @@
+.test-img-static-1 {
+    background-image: url(/static/image/test-img.png);
+    background-color: #f00;
+}
+.test-img-static-2 {
+    background-image: url(./image/test-img.png);
+    background-color: #0f0;
+}
+.test-img-res-1 {
+    background-image: url(/static/image/test-img.png);
+    background-color: #00f;
+}
+.test-img-res-2 {
+    background-image: url(./image/test-img.png);
+    background-color: #000;
+}

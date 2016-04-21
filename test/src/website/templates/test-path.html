@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>test index</title>
+    </head>
+    <body>
+        <!--@start-->
+        <!--@compile: js-->
+        <!--@base: //geekie.online-->
+        <!--@ignore: /static/js/-->
+        <!--@path: //geekie.online/js-->
+        <script type="text/javascript" src="/static/js/test-path/test-path-1.js"></script>
+        <script type="text/javascript" src="/static/js/test-path/test-path-2.js"></script>
+        <script type="text/javascript" src="/static/js/test-path/test-path-3.js"></script>
+            <!--@start-->
+            <!--@compile: js-->
+            <!--@file: //geekie.online/js/test-path-file-combo.js-->
+            <script type="text/javascript" src="{{res}}/js/test-path/test-path-file-1.js"></script>
+            <script type="text/javascript" src="{{res}}/js/test-path/test-path-file-2.js"></script>
+            <!--@end-->
+        <!--@end-->
+
+        <!--@start-->
+        <!--@compile: js-->
+        <!--@file: /static/js/lsrequire.js-->
+        <script type="text/javascript" src="/static/js/lsrequire.js"></script>
+        <!--@end-->
+    </body>
+</html>
