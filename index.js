@@ -309,7 +309,6 @@ module.exports = function(prefixes){
                             }
                         }
                     })
-                    console.log(map)
                     var newCode ="<script type='text/javascript'>\r\n"
                                 +"if(typeof __require__ == 'undefined'){\r\n"
                                 +"    var __require__ = {\r\n"
