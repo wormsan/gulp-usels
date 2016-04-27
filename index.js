@@ -214,7 +214,7 @@ module.exports = function(prefixes){
                                 var src = getSrc(tag)
                                 var glob = getGlob(file.base,src)
                                 if(glob == file2.path){
-                                    var originGlob = reGlob(block.commands.path,clearPath(src),block.commands.ignore)
+                                    var originGlob = reGlob(block.commands.base+'/'+block.commands.path,clearPath(src),block.commands.ignore)
                                     var parsedGlob = parsePath(originGlob)
                                     var p = path.resolve(file.base,parsedGlob)
                                     var revision = rev(file2.contents)
@@ -287,7 +287,7 @@ module.exports = function(prefixes){
                 code = code.concat(block.code.replace(block.code,block.commands.file))
             }else if(block.commands.path){
                 code = code.concat(block.tags.map(function(tag){
-                    return reGlob(block.commands.path,clearPath(getSrc(tag)),block.commands.ignore)
+                    return reGlob(block.commands.base+'/'+block.commands.path,clearPath(getSrc(tag)),block.commands.ignore)
                 }))
             }
             block.subBlocks.forEach(function(subBlock){
@@ -309,6 +309,7 @@ module.exports = function(prefixes){
                             }
                         }
                     })
+                    console.log(map)
                     var newCode ="<script type='text/javascript'>\r\n"
                                 +"if(typeof __require__ == 'undefined'){\r\n"
                                 +"    var __require__ = {\r\n"
