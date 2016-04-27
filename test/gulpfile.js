@@ -5,7 +5,7 @@ var cssmin = require('gulp-cssmin')
 var usels = require('../index.js')
 var prefix = {
         "{{res}}": "../res",
-        '//geekie.online': '../res'
+        '//blog.geekie.online': '../res'
 }
 gulp.task('test',function(){
     gulp.src('./src/website/**/*.html')
