@@ -375,10 +375,10 @@ module.exports.rewrite = function(){
             if(glob == file.path){
                 var source = String(file.contents)
                 source = ['!function(){'
-                         ,'    if(require){'
+                         ,'    if(lsrequire){'
                          ,'        var content = {"code": ' + JSON.stringify(source)
                                               + ',"filename":'+JSON.stringify(path.basename(file.path).replace(/\.[0-9a-z]{10}.*$/,''))+'}'
-                         ,'        require.inject(content)'
+                         ,'        lsrequire.inject(content)'
                          ,'    }'
                          ,'}();'].join('\r\n')
                 file.contents = new Buffer(source)

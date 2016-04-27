@@ -6,7 +6,7 @@ if(typeof __require__ == 'undefined'){
         }
     }
 }
-var require = (function(){
+var lsrequire = (function(){
     if(typeof requireConfig == 'undefined'){
         requireConfig = {
             baseUrl: '',
