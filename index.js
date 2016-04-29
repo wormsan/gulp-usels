@@ -8,6 +8,7 @@ var parser = require('./lib/parser.js')
 var manifest = []
 
 module.exports = function(prefixes,opt){
+    opt = opt || {}
     return through2.obj(function(file,enc,cb){
         var revs = {}
         var source = String(file.contents)
