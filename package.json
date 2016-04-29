@@ -1,6 +1,6 @@
 {
   "name": "gulp-usels",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a front-end build system that use localstorage to cache files",
   "main": "index.js",
   "scripts": {
