@@ -1,7 +1,7 @@
 var gulp = require('gulp')
-var gulpif = require('gulp-if')
-var uglify = require('gulp-uglify')
-var cssmin = require('gulp-cssmin')
+//var gulpif = require('gulp-if')
+//var uglify = require('gulp-uglify')
+//var cssmin = require('gulp-cssmin')
 var usels = require('../index.js')
 var prefix = {
         "{{res}}": "../res",

@@ -321,7 +321,8 @@ module.exports = function(prefixes,opt){
                         var key = item.replace(block.commands.base,'').replace(/^\//,'')
                         for(var rev in revs){
                             if(rev.match(key)){
-                                map[key] = path.normalize(revs[rev])
+                                key = path.normalize(key)
+                                map[key] = revs[rev]
                             }
                         }
                     })
