@@ -9,7 +9,9 @@ var prefix = {
 }
 gulp.task('test',function(){
     gulp.src('./src/website/**/*.html')
-        .pipe(usels(prefix))
+        .pipe(usels(prefix,{
+            simpleMode:true
+        }))
         //.pipe(gulpif('*.js',uglify()))
         //.pipe(gulpif('*.css',cssmin()))
         .pipe(gulp.dest('./dist/website'))

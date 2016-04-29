@@ -7,13 +7,25 @@ var url = require('url')
 var parser = require('./lib/parser.js')
 var manifest = []
 
-module.exports = function(prefixes){
+module.exports = function(prefixes,opt){
     return through2.obj(function(file,enc,cb){
         var revs = {}
         var source = String(file.contents)
         var self = this
         var blocks = parser(file)
         var finishCnt = 0
+        var blockPathFix = function(block){
+            if(!opt.simpleMode)return
+            if(block.commands.path && !block.commands.base){
+                for(var key in prefixes){
+                    if(block.commands.path.match(key)){
+                        block.commands.base = prefixes[key]
+                        block.commands.path = block.commands.path.replace(new RegExp(key+'[\/]'),'')
+                        return
+                    }
+                }
+            }
+        }
         //文件重命名
         var rename = function(p,rev){
             if(p)
@@ -210,6 +222,7 @@ module.exports = function(prefixes){
                         }
                     }else{
                         if(block.commands.path){
+                            blockPathFix(block)
                             block.tags.forEach(function(tag){
                                 var src = getSrc(tag)
                                 var glob = getGlob(file.base,src)
@@ -286,6 +299,7 @@ module.exports = function(prefixes){
             if(block.commands.file){
                 code = code.concat(block.code.replace(block.code,block.commands.file))
             }else if(block.commands.path){
+                blockPathFix(block)
                 code = code.concat(block.tags.map(function(tag){
                     return reGlob(block.commands.base+'/'+block.commands.path,clearPath(getSrc(tag)),block.commands.ignore)
                 }))
@@ -300,6 +314,7 @@ module.exports = function(prefixes){
             blocks.forEach(function(block){
                 var code = getCodeBlock(block)
                 if(block.commands.path){
+                    blockPathFix(block)
                     var map = {}
                     getNewBlock(block).forEach(function(item){
                         var key = item.replace(block.commands.base,'').replace(/^\//,'')
