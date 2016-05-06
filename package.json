@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "gulp-util": "^3.0.7",
+    "lodash": "^4.11.2",
     "rev-hash": "^1.0.0",
     "through2": "^2.0.1",
     "vinyl-fs": "^2.4.3"

@@ -4,23 +4,39 @@ var path = require('path')
 var vfs = require('vinyl-fs')
 var rev = require('rev-hash')
 var url = require('url')
+var _ = require('lodash')
 var parser = require('./lib/parser.js')
 var manifest = []
+var versionMap = {}
 
-module.exports = function(prefixes,opt){
-    opt = opt || {}
+function vmify(glob,pre,post){
+    pre = pre || ''
+    post = post || ''
+    return pre+glob.replace(/-|\.|\//g,'_').toUpperCase()+post
+}
+module.exports = function(prefixes,_opt){
+    var opt = {
+        usevm:false,
+        simpleMode: false,
+        vm: {
+            pre:'',
+            post:''
+        }
+    }
+    _.extend(opt,_opt)
     return through2.obj(function(file,enc,cb){
         var revs = {}
         var source = String(file.contents)
         var self = this
         var blocks = parser(file)
         var finishCnt = 0
+
         var blockPathFix = function(block){
             if(!opt.simpleMode)return
             if(block.commands.path && !block.commands.base){
                 for(var key in prefixes){
                     if(block.commands.path.match(key)){
-                        block.commands.base = prefixes[key]
+                        block.commands.base = key
                         block.commands.path = block.commands.path.replace(new RegExp(key+'[\/]'),'')
                         return
                     }
@@ -79,6 +95,7 @@ module.exports = function(prefixes,opt){
         //解析前缀
         var getPath = function(p){
             for(var key in prefixes){
+                console.log(key)
                 if(p.match(new RegExp('^'+key))){
                     return key
                 }
@@ -318,11 +335,18 @@ module.exports = function(prefixes,opt){
                     blockPathFix(block)
                     var map = {}
                     getNewBlock(block).forEach(function(item){
-                        var key = item.replace(block.commands.base,'').replace(/^\//,'')
+                        var key = clearPath(item).replace(block.commands.base,'').replace(/^\//,'')
                         for(var rev in revs){
                             if(rev.match(key)){
-                                key = path.normalize(key)
-                                map[key] = revs[rev]
+                                if(opt.usevm){
+                                    var vmkey = vmify(key,opt.vm.pre,opt.vm.post)
+                                    map[path.normalize(key)] = vmkey
+                                    var tmp = {}
+                                    tmp[vmkey] = revs[rev]
+                                    _.assign(versionMap,tmp)
+                                }else{
+                                    map[path.normalize(key)] = revs[rev]
+                                }
                             }
                         }
                     })
@@ -402,5 +426,25 @@ module.exports.rewrite = function(){
             }
         })
         cb(null,file)
+    })
+}
+//version map
+module.exports.vm = function(){
+    var lastFile
+    var path
+    var base
+    return through2.obj(function(file,enc,cb){
+        lastFile = this
+        path = file.path
+        base = file.base
+        cb()
+    },function(cb){
+        var f = new gutil.File
+        var bf = new Buffer(JSON.stringify(versionMap).replace(/,/g,',\r\n'))
+        f.base = './'
+        f.path = './vm.json'
+        f.contents = bf
+        lastFile.push(f)
+        cb()
     })
 }
