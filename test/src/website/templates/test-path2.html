@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>test index</title>
+    </head>
+    <body>
+        <!--@start-->
+        <!--@compile: js-->
+        <!--@path: {JS_CDN_IP}/gomeUI-->
+        <script type="text/javascript" src="/static/js/test-path/test-path-3.js"></script>
+        <script type="text/javascript" src="{GOMEUI_CDN_IP}/test-gomeui.js"></script>
+            <!--@start-->
+            <!--@compile: js-->
+            <!--@file: {JS_CDN_IP}/test-path-file-combo2.js-->
+            <script type="text/javascript" src="{{res}}/js/test-path/test-path-file-1.js"></script>
+            <!--@end-->
+        <!--@end-->
+
+        <!--@start-->
+        <!--@compile: js-->
+        <!--@file: /static/js/lsrequire.js-->
+        <script type="text/javascript" src="/static/js/lsrequire.js"></script>
+        <!--@end-->
+    </body>
+</html>
